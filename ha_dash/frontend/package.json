@@ -9,7 +9,7 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@solidjs/web": "2.0.0-rc.2",
+    "@solidjs/web": "2.0.0-rc.6",
     "home-assistant-js-websocket": "9.6.0",
     "solid-js": "2.0.0-rc.2"
   },
