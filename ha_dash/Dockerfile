@@ -26,6 +26,6 @@ LABEL \
     io.hass.version="${BUILD_VERSION}" \
     org.opencontainers.image.title="HA Dash Prototype" \
     org.opencontainers.image.description="Standalone Solid 2 interface for Home Assistant devices" \
-    org.opencontainers.image.source="https://github.com/change-me/ha-dash"
+    org.opencontainers.image.source="https://github.com/Tiktack/ha-dash"
 
 CMD ["node", "/app/server.mjs"]

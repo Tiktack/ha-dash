@@ -1,8 +1,8 @@
 name: "HA Dash Prototype"
-version: "0.1.0"
+version: "0.0.3"
 slug: "ha_dash"
 description: "Standalone Solid 2 proof-of-concept UI for Home Assistant devices"
-url: "https://github.com/change-me/ha-dash/tree/main/ha_dash"
+url: "https://github.com/Tiktack/ha-dash/tree/main/ha_dash"
 stage: experimental
 boot: manual
 init: false
@@ -18,4 +18,4 @@ options:
   home_assistant_url: "http://homeassistant.local:8123"
 schema:
   home_assistant_url: str
-image: "ghcr.io/change-me/ha-dash"
+image: "ghcr.io/tiktack/ha-dash"

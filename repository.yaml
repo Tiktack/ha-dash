@@ -1,4 +1,4 @@
 # https://developers.home-assistant.io/docs/apps/repository#repository-configuration
 name: "HA Dash"
-url: "https://github.com/change-me/ha-dash"
-maintainer: "change-me"
+url: "https://github.com/Tiktack/ha-dash"
+maintainer: "Tiktack"
