@@ -1,0 +1,5 @@
+ha_dash/frontend/node_modules/
+ha_dash/frontend/dist/
+*.log
+.DS_Store
+

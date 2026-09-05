@@ -1,0 +1,22 @@
+{
+  "name": "ha-dash-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@solidjs/web": "2.0.0-rc.2",
+    "home-assistant-js-websocket": "9.6.0",
+    "solid-js": "2.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@solidjs/vite-plugin": "3.0.0-next.33",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}
+

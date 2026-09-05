@@ -1,0 +1,22 @@
+name: "HA Dash Prototype"
+version: "0.1.0"
+slug: "ha_dash"
+description: "Standalone Solid 2 proof-of-concept UI for Home Assistant devices"
+url: "https://github.com/change-me/ha-dash/tree/main/ha_dash"
+stage: experimental
+startup: application
+boot: manual
+init: false
+arch:
+  - aarch64
+  - amd64
+ports:
+  8099/tcp: 8099
+ports_description:
+  8099/tcp: "Standalone HA Dash web interface"
+webui: "http://[HOST]:[PORT:8099]"
+options:
+  home_assistant_url: "http://homeassistant.local:8123"
+schema:
+  home_assistant_url: str
+image: "ghcr.io/change-me/ha-dash"

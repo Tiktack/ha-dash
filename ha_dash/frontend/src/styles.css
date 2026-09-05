@@ -1,0 +1,130 @@
+:root {
+  color: #e7f2ef;
+  background: #0d1416;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% -10%, rgba(55, 201, 157, 0.16), transparent 32rem),
+    #0d1416;
+}
+
+button, input { font: inherit; }
+
+main {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 80px;
+}
+
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.eyebrow, .area {
+  margin: 0 0 6px;
+  color: #6edbb8;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+h1 { margin: 0; font-size: clamp(2.3rem, 8vw, 4.8rem); line-height: 0.95; letter-spacing: -0.06em; }
+.subtitle { margin: 15px 0 0; color: #9cafaa; }
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid #2c3b3b;
+  border-radius: 999px;
+  color: #9cafaa;
+  font-size: 0.82rem;
+  text-transform: capitalize;
+}
+
+.status__dot { width: 8px; height: 8px; border-radius: 50%; background: #75817f; }
+.status--connected .status__dot { background: #5ee5ad; box-shadow: 0 0 0 5px rgba(94, 229, 173, 0.12); }
+.status--connecting .status__dot, .status--loading .status__dot { animation: pulse 1.2s infinite; }
+.status--error .status__dot { background: #ff807a; }
+
+.connect-panel {
+  max-width: 620px;
+  padding: 26px;
+  border: 1px solid #273536;
+  border-radius: 20px;
+  background: rgba(22, 31, 33, 0.82);
+}
+
+.connect-panel label { display: block; margin-bottom: 9px; font-weight: 700; }
+.connect-panel input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #344546;
+  border-radius: 10px;
+  outline: none;
+  color: #e7f2ef;
+  background: #10191b;
+}
+.connect-panel input:focus { border-color: #63d8b1; box-shadow: 0 0 0 3px rgba(99, 216, 177, 0.12); }
+.connect-panel button {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  color: #092019;
+  background: #69deb8;
+  font-weight: 800;
+  cursor: pointer;
+}
+.connect-panel button:disabled { cursor: wait; opacity: 0.48; }
+.hint, .model, .muted { color: #81928f; }
+.hint { margin: 13px 0 0; font-size: 0.84rem; }
+.error { color: #ff9b95; overflow-wrap: anywhere; }
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.summary div { padding: 18px 20px; border: 1px solid #273536; border-radius: 14px; background: #151e20; }
+.summary strong { display: block; font-size: 1.55rem; }
+.summary span { color: #879794; font-size: 0.82rem; }
+
+.device-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.device-card { padding: 20px; border: 1px solid #273536; border-radius: 16px; background: #151e20; }
+.device-card__heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.device-card h2 { margin: 0; font-size: 1.08rem; }
+.entity-count { min-width: 30px; padding: 5px 8px; border-radius: 999px; color: #88d8be; background: #203a34; text-align: center; font-size: 0.78rem; }
+.model { margin: 8px 0 15px; min-height: 1.2em; font-size: 0.8rem; }
+.device-card ul { margin: 0; padding: 0; list-style: none; }
+.device-card li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-top: 1px solid #243032; font-size: 0.84rem; }
+.device-card li span { min-width: 0; overflow: hidden; color: #aab8b5; text-overflow: ellipsis; white-space: nowrap; }
+.device-card li strong { flex: 0 0 auto; color: #eaf5f2; font-weight: 650; }
+.empty { color: #81928f; }
+
+@keyframes pulse { 50% { opacity: 0.3; transform: scale(0.75); } }
+
+@media (max-width: 640px) {
+  main { width: min(100% - 22px, 1120px); padding-top: 28px; }
+  .hero { align-items: flex-end; }
+  .subtitle { max-width: 220px; font-size: 0.9rem; }
+  .summary { gap: 7px; }
+  .summary div { padding: 14px 12px; }
+  .device-list { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: ha_dash/frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ha_dash/frontend
+        run: npm ci
+
+      - name: Type-check
+        working-directory: ha_dash/frontend
+        run: npm run check
+
+      - name: Build frontend
+        working-directory: ha_dash/frontend
+        run: npm run build
+
+  app-lint:
+    name: Home Assistant app metadata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run Home Assistant app linter
+        uses: frenck/action-addon-linter@v2.21
+        with:
+          path: "./ha_dash"
+
+  container:
+    name: Container and runtime smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build image
+        run: >-
+          docker build
+          --build-arg BUILD_VERSION=ci
+          --tag ha-dash:ci
+          ./ha_dash
+
+      - name: Start image
+        run: >-
+          docker run
+          --detach
+          --name ha-dash-ci
+          --mount type=bind,source="$PWD/ha_dash/tests",target=/data,readonly
+          --publish 18099:8099
+          ha-dash:ci
+
+      - name: Verify runtime endpoints
+        run: |
+          set -euo pipefail
+          trap 'docker logs ha-dash-ci || true' ERR
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:18099/ >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          test "$(curl --fail --silent http://127.0.0.1:18099/runtime-config.json)" = \
+            '{"homeAssistantUrl":"https://home.example.com"}'
+          curl --fail --silent http://127.0.0.1:18099/ | grep --quiet "HA Dash Prototype"
+
+      - name: Stop image
+        if: always()
+        run: docker rm --force ha-dash-ci 2>/dev/null || true
