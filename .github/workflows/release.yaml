@@ -21,7 +21,7 @@ jobs:
       name: ${{ steps.info.outputs.name }}
       registry_prefix: ${{ steps.normalize.outputs.registry_prefix }}
       url: ${{ steps.info.outputs.url }}
-      version: ${{ steps.info.outputs.version }}
+      version: ${{ steps.normalize.outputs.version }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v7.0.1
@@ -37,10 +37,11 @@ jobs:
       - name: Validate release configuration
         env:
           IMAGE: ${{ steps.info.outputs.image }}
+          INFO_VERSION: ${{ steps.info.outputs.version }}
           RELEASE_TAG: ${{ github.event.release.tag_name || '' }}
-          VERSION: ${{ steps.info.outputs.version }}
         run: |
           set -euo pipefail
+          VERSION="$(printf '%s' "${INFO_VERSION}" | tr -d '"')"
           if [[ "${IMAGE}" == *"/change-me/"* ]]; then
             echo "::error::Run scripts/configure-repository.ps1 before publishing."
             exit 1
@@ -54,9 +55,12 @@ jobs:
         id: normalize
         env:
           IMAGE: ${{ steps.info.outputs.image }}
+          INFO_VERSION: ${{ steps.info.outputs.version }}
         run: |
           echo "image_name=${IMAGE##*/}" >> "$GITHUB_OUTPUT"
           echo "registry_prefix=${IMAGE%/*}" >> "$GITHUB_OUTPUT"
+          VERSION="$(printf '%s' "${INFO_VERSION}" | tr -d '"')"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Prepare build matrix
         id: matrix

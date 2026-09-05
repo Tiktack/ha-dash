@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.4
+
+- Normalize Home Assistant metadata versions before release-tag validation.
+
 ## 0.0.3
 
 - Publish the standalone app from the Tiktack/ha-dash GitHub repository.
