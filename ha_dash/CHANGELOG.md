@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+- Normalize quoted image metadata before publishing multi-architecture images.
+
 ## 0.0.4
 
 - Normalize Home Assistant metadata versions before release-tag validation.

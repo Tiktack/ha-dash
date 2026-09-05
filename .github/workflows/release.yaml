@@ -16,11 +16,11 @@ jobs:
     outputs:
       architectures: ${{ steps.info.outputs.architectures }}
       build_matrix: ${{ steps.matrix.outputs.matrix }}
-      description: ${{ steps.info.outputs.description }}
+      description: ${{ steps.normalize.outputs.description }}
       image_name: ${{ steps.normalize.outputs.image_name }}
-      name: ${{ steps.info.outputs.name }}
+      name: ${{ steps.normalize.outputs.name }}
       registry_prefix: ${{ steps.normalize.outputs.registry_prefix }}
-      url: ${{ steps.info.outputs.url }}
+      url: ${{ steps.normalize.outputs.url }}
       version: ${{ steps.normalize.outputs.version }}
     steps:
       - name: Check out repository
@@ -36,11 +36,12 @@ jobs:
 
       - name: Validate release configuration
         env:
-          IMAGE: ${{ steps.info.outputs.image }}
+          INFO_IMAGE: ${{ steps.info.outputs.image }}
           INFO_VERSION: ${{ steps.info.outputs.version }}
           RELEASE_TAG: ${{ github.event.release.tag_name || '' }}
         run: |
           set -euo pipefail
+          IMAGE="$(printf '%s' "${INFO_IMAGE}" | tr -d '"')"
           VERSION="$(printf '%s' "${INFO_VERSION}" | tr -d '"')"
           if [[ "${IMAGE}" == *"/change-me/"* ]]; then
             echo "::error::Run scripts/configure-repository.ps1 before publishing."
@@ -54,13 +55,23 @@ jobs:
       - name: Normalize image information
         id: normalize
         env:
-          IMAGE: ${{ steps.info.outputs.image }}
+          INFO_IMAGE: ${{ steps.info.outputs.image }}
           INFO_VERSION: ${{ steps.info.outputs.version }}
+          INFO_NAME: ${{ steps.info.outputs.name }}
+          INFO_DESCRIPTION: ${{ steps.info.outputs.description }}
+          INFO_URL: ${{ steps.info.outputs.url }}
         run: |
+          IMAGE="$(printf '%s' "${INFO_IMAGE}" | tr -d '"')"
           echo "image_name=${IMAGE##*/}" >> "$GITHUB_OUTPUT"
           echo "registry_prefix=${IMAGE%/*}" >> "$GITHUB_OUTPUT"
           VERSION="$(printf '%s' "${INFO_VERSION}" | tr -d '"')"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          NAME="$(printf '%s' "${INFO_NAME}" | tr -d '"')"
+          DESCRIPTION="$(printf '%s' "${INFO_DESCRIPTION}" | tr -d '"')"
+          URL="$(printf '%s' "${INFO_URL}" | tr -d '"')"
+          echo "name=${NAME}" >> "$GITHUB_OUTPUT"
+          echo "description=${DESCRIPTION}" >> "$GITHUB_OUTPUT"
+          echo "url=${URL}" >> "$GITHUB_OUTPUT"
 
       - name: Prepare build matrix
         id: matrix

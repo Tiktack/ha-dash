@@ -1,5 +1,5 @@
 name: "HA Dash Prototype"
-version: "0.0.4"
+version: "0.0.5"
 slug: "ha_dash"
 description: "Standalone Solid 2 proof-of-concept UI for Home Assistant devices"
 url: "https://github.com/Tiktack/ha-dash/tree/main/ha_dash"
