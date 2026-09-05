@@ -4,7 +4,6 @@ slug: "ha_dash"
 description: "Standalone Solid 2 proof-of-concept UI for Home Assistant devices"
 url: "https://github.com/change-me/ha-dash/tree/main/ha_dash"
 stage: experimental
-startup: application
 boot: manual
 init: false
 arch:
