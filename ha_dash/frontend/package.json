@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@solidjs/web": "2.0.0-rc.2",
-    "home-assistant-js-websocket": "9.6.0",
+    "home-assistant-js-websocket": "9.7.0",
     "solid-js": "2.0.0-rc.2"
   },
   "devDependencies": {
